@@ -1,0 +1,48 @@
+﻿@model IEnumerable<MarinaData.Slip>
+
+@{
+    ViewData["Title"] = "Slip By Dock";
+}
+
+<h1>Slip By Dock</h1>
+<form asp-action="FilteredList" method="post">
+    <p>
+        <select name="id" asp-items="@ViewBag.Docks" class="form-select" onchange="this.form.submit()"></select>
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Width)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DockID)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dock.Name)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

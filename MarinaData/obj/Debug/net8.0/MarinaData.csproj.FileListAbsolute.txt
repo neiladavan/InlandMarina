@@ -1,0 +1,14 @@
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\bin\Debug\net8.0\MarinaData.deps.json
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\bin\Debug\net8.0\MarinaData.runtimeconfig.json
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\bin\Debug\net8.0\MarinaData.dll
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\bin\Debug\net8.0\MarinaData.pdb
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.csproj.AssemblyReference.cache
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.AssemblyInfoInputs.cache
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.AssemblyInfo.cs
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.csproj.CoreCompileInputs.cache
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.dll
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\refint\MarinaData.dll
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.pdb
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.genruntimeconfig.cache
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\ref\MarinaData.dll

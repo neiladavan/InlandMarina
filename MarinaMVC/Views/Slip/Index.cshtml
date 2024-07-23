@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MarinaData.Slip>
+
+@{
+    ViewData["Title"] = "Slips";
+}
+
+<h1>Slips</h1>
+@* <div>
+    <a asp-action="FilteredList" asp-controller="Slip">Filter List</a>
+</div> *@
+<form asp-action="Index" method="post">
+    <p>
+        <select name="id" asp-items="@ViewBag.Docks" class="form-select" onchange="this.form.submit()"></select>
+    </p>
+</form>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Width)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DockID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dock.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item @(ViewBag.PageNumber == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-id="@ViewBag.SelectedDock" asp-route-page="@(ViewBag.PageNumber - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.PageNumber == i ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-id="@ViewBag.SelectedDock" asp-route-page="@i">@i</a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.PageNumber == ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-id="@ViewBag.SelectedDock" asp-route-page="@(ViewBag.PageNumber + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
