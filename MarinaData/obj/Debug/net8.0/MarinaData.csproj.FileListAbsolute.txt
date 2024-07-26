@@ -12,3 +12,4 @@ C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\refin
 C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.pdb
 C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.genruntimeconfig.cache
 C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\ref\MarinaData.dll
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaData\obj\Debug\net8.0\MarinaData.sourcelink.json

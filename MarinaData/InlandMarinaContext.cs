@@ -10,7 +10,7 @@ namespace MarinaData
 {
     public class InlandMarinaContext : DbContext
     {
-        //public InlandMarinaContext() : base() { }
+        public InlandMarinaContext() : base() { } // default constructor
 
         public InlandMarinaContext(DbContextOptions<InlandMarinaContext> options) : base(options) { }
 
@@ -33,9 +33,36 @@ namespace MarinaData
 
             //seed data created here
             modelBuilder.Entity<Customer>().HasData(
-                new Customer { ID = 1, FirstName = "John", LastName = "Doe", Phone = "265-555-1212", City = "Phoenix" },
-                new Customer { ID = 2, FirstName = "Sara", LastName = "Williams", Phone = "403-555-9585", City = "Calgary" },
-                new Customer { ID = 3, FirstName = "Ken", LastName = "Wong", Phone = "802-555-3214", City = "Kansas City" }
+                new Customer
+                {
+                    ID = 1,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Phone = "265-555-1212",
+                    City = "Phoenix",
+                    Username = "jdoe",
+                    Password = "password"
+                },
+                new Customer
+                {
+                    ID = 2,
+                    FirstName = "Sara",
+                    LastName = "Williams",
+                    Phone = "403-555-9585",
+                    City = "Calgary",
+                    Username = "swilliams",
+                    Password = "password"
+                },
+                new Customer
+                {
+                    ID = 3,
+                    FirstName = "Ken",
+                    LastName = "Wong",
+                    Phone = "802-555-3214",
+                    City = "Kansas City",
+                    Username = "kwong",
+                    Password = "password"
+                }
             );
 
             modelBuilder.Entity<Dock>().HasData(

@@ -1,0 +1,23 @@
+﻿@model MarinaData.Customer
+@{
+    ViewData["Title"] = "Login";
+}
+
+<form asp-action="Login">
+    <h3>Login</h3>
+
+    <table class="table">
+        <tr>
+            <td>Username:</td>
+            <td><input type="text" asp-for="Username" /></td>
+        </tr>
+
+        <tr>
+            <td>Password:</td>
+            <td><input type="text" asp-for="Password" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Authenticate" class="btn btn-primary" /></td>
+        </tr>
+    </table>
+</form>

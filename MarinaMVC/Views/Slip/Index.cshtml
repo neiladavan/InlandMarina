@@ -5,17 +5,12 @@
 }
 
 <h1>Slips</h1>
-@* <div>
-    <a asp-action="FilteredList" asp-controller="Slip">Filter List</a>
-</div> *@
 <form asp-action="Index" method="post">
     <p>
         <select name="id" asp-items="@ViewBag.Docks" class="form-select" onchange="this.form.submit()"></select>
     </p>
 </form>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -31,7 +26,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.DockID)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -48,11 +42,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Dock.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

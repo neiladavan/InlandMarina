@@ -15,20 +15,6 @@ namespace MarinaMVC.Controllers
             _context = context;
         }
 
-        // GET: SlipController
-        /*public ActionResult Index()
-        {
-            // prepare the dock list for the select element (dropdown)
-            List<Dock> docks = DockDB.GetDocks(_context);
-
-            var list = new SelectList(docks, "ID", "Name").ToList(); // to add "All" option
-
-            list.Insert(0, new SelectListItem("All Docks", "X")); // X is the value for all
-
-            ViewBag.Docks = list;
-            List<Slip> slips = MarinaDB.GetSlips(_context);
-            return View(slips);
-        }*/
         public ActionResult Index(int? id, int? page)
         {
             // Prepare the dock list for the select element (dropdown)
@@ -67,38 +53,8 @@ namespace MarinaMVC.Controllers
         [HttpPost]
         public ActionResult Index(int id = 0, int? page = 1) // 0 means no filtering
         {
-            return RedirectToAction("Index", new { id = id, page = page });
+            return RedirectToAction("Index", new { id, page });
         }
-        /*public ActionResult Index(int id = 0) // X means no filtering
-        {
-            // restore content of the select element
-            List<Dock> genres = DockDB.GetDocks(_context);
-
-            var list = new SelectList(genres, "ID", "Name").ToList(); // to add "All" option
-
-            list.Insert(0, new SelectListItem("All Docks", "X")); // X is the value for all
-
-            // preserve current selection - mark the select item
-            foreach (var item in list)
-            {
-                if (item.Value == id.ToString())
-                {
-                    item.Selected = true;
-                    break;
-                }
-            }
-
-            ViewBag.Docks = list;
-
-            List<Slip> slip;
-
-            if (id == 0)
-                slip = MarinaDB.GetSlips(_context);
-            else
-                slip = MarinaDB.GetSlipsByDockId(_context, id);
-
-            return View(slip);
-        }*/
 
         // GET: SlipController/Details/5
         public ActionResult Details(int id)

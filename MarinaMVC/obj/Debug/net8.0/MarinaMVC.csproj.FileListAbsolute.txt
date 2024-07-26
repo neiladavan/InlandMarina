@@ -251,3 +251,4 @@ C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaMVC\bin\Debug\net8.0\runtim
 C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaMVC\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaMVC\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaMVC\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+C:\Users\NEIL ADAVAN\source\repos\MarinaMVCApp\MarinaMVC\obj\Debug\net8.0\MarinaMVC.sourcelink.json

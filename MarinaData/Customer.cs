@@ -23,11 +23,20 @@ namespace MarinaData
 
         [Required]
         [StringLength(15)]
+        [RegularExpression(@"^\d{3}-\d{3}-\d{4}$", ErrorMessage = "Invalid phone number format. Use the format 123-456-7890.")]
         public string Phone { get; set; }
 
         [Required]
         [StringLength(30)]
         public string City { get; set; }
+
+        [Required(ErrorMessage = "Username is required")]
+        [StringLength(30)]
+        public string Username { get; set; }
+
+        [Required(ErrorMessage = "Password is required")]
+        [StringLength(30)]
+        public string Password { get; set; }
 
         // navigation property
         public virtual ICollection<Lease> Leases { get; set; }
