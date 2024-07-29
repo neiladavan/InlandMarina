@@ -46,6 +46,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/NEIL ADAVAN/source/repos/MarinaMVCApp/MarinaMVC/Views/Lease/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhc2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NEIL ADAVAN/source/repos/MarinaMVCApp/MarinaMVC/Views/Shared/Components/SlipsByDock/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcU2xpcHNCeURvY2tcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/NEIL ADAVAN/source/repos/MarinaMVCApp/MarinaMVC/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -64,6 +72,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/NEIL ADAVAN/source/repos/MarinaMVCApp/MarinaMVC/Views/Slip/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2xpcFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NEIL ADAVAN/source/repos/MarinaMVCApp/MarinaMVC/Views/Slip/MySlips.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2xpcFxNeVNsaXBzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/NEIL ADAVAN/source/repos/MarinaMVCApp/MarinaMVC/Views/_ViewImports.cshtml]

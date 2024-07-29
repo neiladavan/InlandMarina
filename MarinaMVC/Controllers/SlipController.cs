@@ -1,5 +1,6 @@
 ﻿using Humanizer.Localisation;
 using MarinaData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -56,73 +57,18 @@ namespace MarinaMVC.Controllers
             return RedirectToAction("Index", new { id, page });
         }
 
-        // GET: SlipController/Details/5
-        public ActionResult Details(int id)
+        [Authorize]
+        public ActionResult MySlips()
         {
-            return View();
-        }
-
-        // GET: SlipController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: SlipController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            int? customerId = HttpContext.Session.GetInt32("CurrentLoggedInCustomer");
+            if (customerId == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Login", "Account");
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: SlipController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+            var leasedSlips = MarinaDB.GetSlipsByCustomerId(_context, customerId.Value);
 
-        // POST: SlipController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: SlipController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: SlipController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(leasedSlips);
         }
     }
 }

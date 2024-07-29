@@ -34,6 +34,8 @@ namespace MarinaMVC.Controllers
                 return View(); // stay on login page
             }
 
+            HttpContext.Session.SetInt32("CurrentLoggedInCustomer", (int)cst.ID);
+
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, cst.Username),

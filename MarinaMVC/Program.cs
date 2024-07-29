@@ -14,6 +14,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddDbContext<InlandMarinaContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("InlandMarinaContext")));
 
+builder.Services.AddSession(); // to use Session state object
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,7 +28,7 @@ app.UseHttpsRedirection(); // added
 app.UseStatusCodePages(); // added: for more user friendly error pages for 403 & 404
 app.UseStaticFiles();
 
-//app.UseSession(); // should be define before routes
+app.UseSession(); // should be define before routes
 app.UseRouting();
 
 app.UseAuthentication(); // added

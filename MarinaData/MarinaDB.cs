@@ -44,5 +44,25 @@ namespace MarinaData
 
             return slips;
         }
+
+        public static List<Slip> GetSlipsByCustomerId(InlandMarinaContext db, int customerId)
+        {
+            // Query Leases and include related Slip and Dock entities
+            var slips = db.Leases
+                .Where(lease => lease.CustomerID == customerId) // Filter by customer ID
+                .Include(lease => lease.Slip) // Include the related Slip entity
+                .ThenInclude(slip => slip.Dock) // Include the related Dock entity
+                .Select(lease => lease.Slip) // Select the Slip entity
+                .Distinct() // Ensure unique slips
+                .ToList();
+
+            return slips;
+        }
+
+        public static void AddSlipLease(InlandMarinaContext db, Lease lease)
+        {
+            db.Leases.Add(lease);
+            db.SaveChanges();
+        }
     }
 }

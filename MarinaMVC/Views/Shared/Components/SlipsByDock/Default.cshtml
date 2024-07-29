@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MarinaData.Slip>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Slip Number</th>
+            <th>Width</th>
+            <th>Length</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var slip in Model)
+        {
+            <tr>
+                <td>@slip.ID</td>
+                <td>@slip.Width</td>
+                <td>@slip.Length</td>
+                <td>
+                    <button class="btn btn-primary" onclick="leaseSlip(@slip.ID)">Lease</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                <a class="page-link" href="javascript:void(0)" onclick="loadSlips(@ViewBag.DockId, @i)">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

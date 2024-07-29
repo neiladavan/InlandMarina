@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Available Slips";
+}
+
+<h2>Available Slips</h2>
+
+<div class="form-group">
+    <select name="id" id="Docks" class="form-control" asp-items="@ViewBag.Docks" class="form-select"></select>
+</div>
+
+<div id="slipsTable">
+    @await Component.InvokeAsync("SlipsByDock", new { id = ViewBag.SelectedDock, page = 1 })
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#Docks").change(function () {
+                var dockID = $("#Docks").val();
+                loadSlips(dockID, 1);
+            });
+        });
+
+        function loadSlips(dockId, page) {
+            $.ajax({
+                method: 'GET',
+                url: '/Lease/GetSlipsByDocks',
+                data: { id: dockId, page: page }
+            }).done(function (result, statusText, xhdr) {
+                $("#slipsTable").html(result);
+            });
+        }
+
+        function leaseSlip(slipId) {
+            $.ajax({
+                method: 'POST',
+                url: '/Lease/LeaseSlip',
+                data: { slipId }
+            }).done(function (result, statusText, xhdr) {
+                loadSlips($("#Docks").val(), 1);
+            });
+        }
+    </script>
+}

@@ -1,0 +1,32 @@
+﻿@model List<MarinaData.Slip>
+
+@{
+    ViewData["Title"] = "My Slips";
+}
+
+<h2>My Slips</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Slip ID</th>
+                <th>Dock Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var slip in Model)
+            {
+                <tr>
+                    <td>@slip.ID</td>
+                    <td>@slip.Dock.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No slips found.</p>
+}
