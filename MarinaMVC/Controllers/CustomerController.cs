@@ -67,7 +67,7 @@ namespace MarinaMVC.Controllers
             if (ModelState.IsValid)
             {
                 // Check if the username is already taken
-                if (_context.Customers.Any(c => c.Username == customer.Username))
+                if (CustomerDB.UsernameAlreadyExists(_context, customer.Username))
                 {
                     ModelState.AddModelError("Username", "Username is already taken.");
                     return View(customer);

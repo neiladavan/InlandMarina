@@ -23,5 +23,10 @@ namespace MarinaData
             db.Customers.Add(newCustomer);
             db.SaveChanges();
         }
+
+        public static bool UsernameAlreadyExists(InlandMarinaContext db, string username)
+        { 
+            return db.Customers.Any(cust => cust.Username == username);
+        }
     }
 }
