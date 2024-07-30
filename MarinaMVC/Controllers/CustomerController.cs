@@ -36,17 +36,8 @@ namespace MarinaMVC.Controllers
 
             HttpContext.Session.SetInt32("CurrentLoggedInCustomer", (int)cst.ID);
 
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, cst.Username),
-                new Claim("FullName", $"{cst.FirstName} {cst.LastName}")
-            };
-
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+            // Set user claims and sign in
+            await SignInUserAsync(cst);
 
             if (String.IsNullOrEmpty(TempData["ReturnUrl"]?.ToString())) // no return URL
                 return RedirectToAction("Index", "Home"); // home page
@@ -59,6 +50,58 @@ namespace MarinaMVC.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); // release cookies
 
             return RedirectToAction("Index", "Home"); // home page
+        }
+
+        // GET: Customer/Register
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        // POST: Customer/Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterAsync(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                // Check if the username is already taken
+                if (_context.Customers.Any(c => c.Username == customer.Username))
+                {
+                    ModelState.AddModelError("Username", "Username is already taken.");
+                    return View(customer);
+                }
+
+                // Use the CustomerData class to register the new customer
+                CustomerDB.Register(_context, customer);
+
+                // Set the session for the logged-in customer
+                HttpContext.Session.SetInt32("CurrentLoggedInCustomer", customer.ID);
+
+                // Set user claims and sign in
+                await SignInUserAsync(customer);
+
+                return RedirectToAction("Index", "Home"); // Redirect to home or another appropriate action
+            }
+
+            return View(customer);
+        }
+
+        // Method to set user claims and sign in
+        private async Task SignInUserAsync(Customer customer)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, customer.Username),
+                new Claim("FullName", $"{customer.FirstName} {customer.LastName}")
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
         }
 
         public IActionResult AccessDenied() // it has to be AccessDenied to work

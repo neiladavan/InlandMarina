@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarinaMVC.Controllers
 {
@@ -70,17 +72,53 @@ namespace MarinaMVC.Controllers
         {
             int? customerId = HttpContext.Session.GetInt32("CurrentLoggedInCustomer");
 
-            if (customerId != null)
+            try
             {
-                Lease newLease = new Lease
+                if (customerId != null)
                 {
-                    SlipID = slipId,
-                    CustomerID = customerId.Value
-                };
+                    Lease newLease = new Lease
+                    {
+                        SlipID = slipId,
+                        CustomerID = customerId.Value
+                    };
 
-                MarinaDB.AddSlipLease(_context, newLease);
+                    MarinaDB.AddSlipLease(_context, newLease);
+
+                    TempData["Message"] = $"Successfully lease slip number {slipId}";
+                }
             }
-            return View("Index");
+            catch (SqlException)
+            {
+                TempData["Message"] = "Database is currently not available. Try again later.}";
+                TempData["IsError"] = true;
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException ex)
+            {
+                // thrown when save changes fails - can be multiple errors
+                string msg = "";
+                var sqlException = (SqlException)ex.InnerException!;
+
+                foreach (SqlError error in sqlException.Errors)
+                {
+                    msg += $"ERROR CODE {error.Number}: {error.Message}\n";
+                }
+
+                TempData["Message"] = msg;
+                TempData["IsError"] = true;
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An error occurred while leasing a slip: {ex.Message}";
+                TempData["IsError"] = true;
+
+                return RedirectToAction(nameof(Index));
+            }
+            
+            return RedirectToAction("MySlips", "Slip");
         }
 
         // GET: LeaseController/Details/5

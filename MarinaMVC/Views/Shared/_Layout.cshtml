@@ -43,6 +43,10 @@
         </nav>
     </header>
     <div class="container">
+        @if (TempData["Message"] != null)
+        {
+            <h4 class="@(TempData["IsError"] != null ? "bg-danger" : "bg-success") mt-3 p-1">@TempData["Message"]</h4>
+        }
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

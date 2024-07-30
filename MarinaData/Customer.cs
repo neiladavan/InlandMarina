@@ -39,6 +39,6 @@ namespace MarinaData
         public string Password { get; set; }
 
         // navigation property
-        public virtual ICollection<Lease> Leases { get; set; }
+        public virtual ICollection<Lease>? Leases { get; set; }
     }
 }

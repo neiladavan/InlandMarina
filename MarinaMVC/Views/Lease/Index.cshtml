@@ -37,7 +37,9 @@
                 url: '/Lease/LeaseSlip',
                 data: { slipId }
             }).done(function (result, statusText, xhdr) {
-                loadSlips($("#Docks").val(), 1);
+                //loadSlips($("#Docks").val(), 1);
+                // Redirect to MySlips action in Slip controller
+                window.location.href = '/Slip/MySlips';
             });
         }
     </script>

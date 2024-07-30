@@ -17,5 +17,11 @@ namespace MarinaData
 
             return cusUser!;
         }
+
+        public static void Register(InlandMarinaContext db, Customer newCustomer)
+        {
+            db.Customers.Add(newCustomer);
+            db.SaveChanges();
+        }
     }
 }

@@ -16,8 +16,14 @@
                 <td>@slip.ID</td>
                 <td>@slip.Width</td>
                 <td>@slip.Length</td>
-                <td>
+                @* <td>
                     <button class="btn btn-primary" onclick="leaseSlip(@slip.ID)">Lease</button>
+                </td> *@
+                <td>
+                    <form asp-controller="Lease" asp-action="LeaseSlip" method="post" class="lease-slip-form">
+                        <input type="hidden" name="slipId" value="@slip.ID" />
+                        <button type="submit" class="btn btn-primary">Lease</button>
+                    </form>
                 </td>
             </tr>
         }
