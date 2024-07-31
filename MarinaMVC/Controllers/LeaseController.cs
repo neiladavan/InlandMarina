@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MarinaMVC.Controllers
 {
+    [Authorize]
     public class LeaseController : Controller
     {
         private InlandMarinaContext _context;
@@ -16,7 +17,6 @@ namespace MarinaMVC.Controllers
             _context = context;
         }
 
-        [Authorize]
         // GET: LeaseController
         // Initial load of the lease page
         public IActionResult Index()
@@ -83,7 +83,6 @@ namespace MarinaMVC.Controllers
             return ViewComponent("SlipsByDock", new { id, page });
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult LeaseSlip(int slipId)
         {
