@@ -38,23 +38,40 @@ namespace MarinaMVC.Controllers
             int pageSize = 10;
             int pageNumber = page ?? 1;
 
-            List<Slip> slips;
-            if (id == 0 || id == null)
+            try
             {
-                slips = MarinaDB.GetSlips(_context);
+                List<Slip> slips;
+                if (id == 0 || id == null)
+                {
+                    slips = MarinaDB.GetSlips(_context);
+                }
+                else
+                {
+                    slips = MarinaDB.GetSlipsByDockId(_context, id.Value);
+                }
+
+                var paginatedSlips = slips.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                var totalSlips = slips.Count;
+                var totalPages = (int)Math.Ceiling((double)totalSlips / pageSize);
+
+                ViewBag.PageNumber = pageNumber;
+                ViewBag.TotalPages = totalPages;
+                ViewBag.DockId = id;
             }
-            else
+            catch (SqlException)
             {
-                slips = MarinaDB.GetSlipsByDockId(_context, id.Value);
+                TempData["Message"] = "Database is currently not available. Try again later.";
+                TempData["IsError"] = true;
+
+                return RedirectToAction(nameof(Index));
             }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An error occurred while filtering my lease slip record: {ex.Message}";
+                TempData["IsError"] = true;
 
-            var paginatedSlips = slips.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-            var totalSlips = slips.Count;
-            var totalPages = (int)Math.Ceiling((double)totalSlips / pageSize);
-
-            ViewBag.PageNumber = pageNumber;
-            ViewBag.TotalPages = totalPages;
-            ViewBag.DockId = id;
+                return RedirectToAction(nameof(Index));
+            }
 
             return View();
         }
@@ -89,7 +106,7 @@ namespace MarinaMVC.Controllers
             }
             catch (SqlException)
             {
-                TempData["Message"] = "Database is currently not available. Try again later.}";
+                TempData["Message"] = "Database is currently not available. Try again later.";
                 TempData["IsError"] = true;
 
                 return RedirectToAction(nameof(Index));

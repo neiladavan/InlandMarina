@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace MarinaMVC.Controllers
@@ -31,6 +33,8 @@ namespace MarinaMVC.Controllers
             Customer cst = CustomerDB.Authenticate(_context, cust.Username, cust.Password);
             if (cst == null) // auth failed
             {
+                TempData["Message"] = "Invalid username/password.";
+                TempData["IsError"] = true;
                 return View(); // stay on login page
             }
 
@@ -64,28 +68,63 @@ namespace MarinaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAsync(Customer customer)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Check if the username is already taken
-                if (CustomerDB.UsernameAlreadyExists(_context, customer.Username))
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("Username", "Username is already taken.");
-                    return View(customer);
+                    // Check if the username is already taken
+                    if (CustomerDB.UsernameAlreadyExists(_context, customer.Username))
+                    {
+                        ModelState.AddModelError("Username", "Username is already taken.");
+                        return View(customer);
+                    }
+
+                    // Use the CustomerData class to register the new customer
+                    CustomerDB.Register(_context, customer);
+
+                    // Set the session for the logged-in customer
+                    HttpContext.Session.SetInt32("CurrentLoggedInCustomer", customer.ID);
+
+                    // Set user claims and sign in
+                    await SignInUserAsync(customer);
+
+                    TempData["Message"] = "Successfully created an account.";
+
+                    return RedirectToAction("Index", "Home"); // Redirect to home or another appropriate action
                 }
 
-                // Use the CustomerData class to register the new customer
-                CustomerDB.Register(_context, customer);
-
-                // Set the session for the logged-in customer
-                HttpContext.Session.SetInt32("CurrentLoggedInCustomer", customer.ID);
-
-                // Set user claims and sign in
-                await SignInUserAsync(customer);
-
-                return RedirectToAction("Index", "Home"); // Redirect to home or another appropriate action
+                return View(customer);
             }
+            catch (SqlException)
+            {
+                TempData["Message"] = "Database is currently not available. Try again later.";
+                TempData["IsError"] = true;
 
-            return View(customer);
+                return View(customer);
+            }
+            catch (DbUpdateException ex)
+            {
+                // thrown when save changes fails - can be multiple errors
+                string msg = "";
+                var sqlException = (SqlException)ex.InnerException!;
+
+                foreach (SqlError error in sqlException.Errors)
+                {
+                    msg += $"ERROR CODE {error.Number}: {error.Message}\n";
+                }
+
+                TempData["Message"] = msg;
+                TempData["IsError"] = true;
+
+                return View(customer);
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An error occurred while creating an account: {ex.Message}";
+                TempData["IsError"] = true;
+
+                return View(customer);
+            }
         }
 
         // Method to set user claims and sign in

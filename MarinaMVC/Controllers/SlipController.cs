@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarinaMVC.Controllers
 {
@@ -60,15 +62,31 @@ namespace MarinaMVC.Controllers
         [Authorize]
         public ActionResult MySlips()
         {
-            int? customerId = HttpContext.Session.GetInt32("CurrentLoggedInCustomer");
-            if (customerId == null)
+            try
             {
-                return RedirectToAction("Login", "Account");
+                int? customerId = HttpContext.Session.GetInt32("CurrentLoggedInCustomer");
+                if (customerId == null)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+
+                var leasedSlips = MarinaDB.GetSlipsByCustomerId(_context, customerId.Value);
+                return View(leasedSlips);
             }
+            catch (SqlException)
+            {
+                TempData["Message"] = "Database is currently not available. Try again later.";
+                TempData["IsError"] = true;
 
-            var leasedSlips = MarinaDB.GetSlipsByCustomerId(_context, customerId.Value);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An error occurred while getting My Slip record: {ex.Message}";
+                TempData["IsError"] = true;
 
-            return View(leasedSlips);
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }
